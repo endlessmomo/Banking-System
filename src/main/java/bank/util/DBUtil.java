@@ -1,4 +1,4 @@
-package global.util;
+package bank.util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
