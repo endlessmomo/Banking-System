@@ -1,13 +1,15 @@
 package bank.service;
 
+import bank.dao.dto.LoginDto;
 import bank.dao.dto.SignUpFormDto;
+import bank.util.Crypt;
 import bank.util.DBUtil;
 
-import java.sql.*;
-import java.text.SimpleDateFormat;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
-
-import static java.time.Instant.now;
 
 public class LoginService {
     public void signUp(SignUpFormDto dto) {
@@ -26,7 +28,7 @@ public class LoginService {
             ps = conn.prepareStatement(sql);
 
             ps.setString(1, dto.getId());
-            ps.setString(2, dto.getPw());
+            ps.setString(2, Crypt.encryptPassword(dto.getPw()));
             ps.setString(3, dto.getName());
             ps.setString(4, dto.getRRN());
             ps.setString(5, dto.getPhoneNumber());
@@ -66,5 +68,9 @@ public class LoginService {
                 ex.printStackTrace();
             }
         }
+    }
+
+    public void logIn(LoginDto dto) {
+
     }
 }
