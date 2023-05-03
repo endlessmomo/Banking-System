@@ -41,4 +41,14 @@ public class InputView {
 
         return new SignUpFormDto(info[0], info[1], info[2], info[3], info[4], info[5]);
     }
+
+    public LoginDto readLogInInfo() {
+        LoginPrint.logInStart();
+        String userId = sc.nextLine();
+
+        LoginPrint.logInPw();
+        String userPw = sc.nextLine();
+
+        return new LoginDto(userId, userPw);
+    }
 }

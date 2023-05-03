@@ -1,6 +1,7 @@
 package bank.controller;
 
 import bank.controller.command.LoginCommand;
+import bank.dao.dto.LoginDto;
 import bank.dao.dto.SignUpFormDto;
 import bank.service.LoginService;
 import bank.view.InputView;
@@ -45,7 +46,14 @@ public class LoginController implements Controller {
     }
 
     public void logIn() {
+        LoginDto dto = execute(inputView::readLogInInfo);
 
+        try{
+            loginService.logIn(dto);
+            outputView.successLogin();
+        } catch (Exception e){
+            outputView.printException(e.getMessage());
+        }
     }
 
     public void logOut() {
