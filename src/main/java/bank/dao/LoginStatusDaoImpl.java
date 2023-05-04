@@ -1,9 +1,11 @@
 package bank.dao;
 
+import bank.dao.dto.LoginStatusDto;
 import bank.util.DBUtil;
 
 import java.sql.*;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 public class LoginStatusDaoImpl implements LoginStatusDao {
     @Override
@@ -41,10 +43,11 @@ public class LoginStatusDaoImpl implements LoginStatusDao {
     }
 
     @Override
-    public int getLoginUserCount() throws SQLException {
+    public LoginStatusDto getLoginUserCountAndMemberId() throws SQLException {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
+        LoginStatusDto dto= null;
 
         int rowCnt = 0;
 
@@ -56,9 +59,12 @@ public class LoginStatusDaoImpl implements LoginStatusDao {
             ps = conn.prepareStatement(sql);
 
             rs = ps.executeQuery();
-            rs.next();
-
-            rowCnt = rs.getRow();
+            if (rs.next()) {
+                dto = LoginStatusDto.builder()
+                        .count(rs.getRow())
+                        .member_id(rs.getLong("member_id"))
+                        .build();
+            }
         } catch (SQLException e) {
             conn.rollback();
             throw new IllegalArgumentException("유저 로우 개수를 가져오는데 문제가 발생했습니다.");
@@ -70,6 +76,6 @@ public class LoginStatusDaoImpl implements LoginStatusDao {
                 conn.close();
             }
         }
-        return rowCnt;
+        return dto;
     }
 }
