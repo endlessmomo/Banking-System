@@ -1,9 +1,10 @@
 package bank.dao.dto;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 @Getter
 @Builder
@@ -19,5 +20,4 @@ public class MemberDto {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private boolean isDeleted;
-
 }

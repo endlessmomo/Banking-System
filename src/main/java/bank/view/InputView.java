@@ -2,10 +2,10 @@ package bank.view;
 
 import bank.controller.command.ControllerMapperCommand;
 import bank.controller.command.LoginCommand;
+import bank.dao.dto.FindLoginIdRequestDto;
 import bank.dao.dto.LoginDto;
 import bank.dao.dto.SignUpFormDto;
 import bank.util.ControllerMapperPrint;
-import bank.util.Crypt;
 import bank.util.LoginPrint;
 
 import java.util.Scanner;
@@ -50,5 +50,15 @@ public class InputView {
         String userPw = sc.nextLine();
 
         return new LoginDto(userId, userPw);
+    }
+
+    public FindLoginIdRequestDto readFindLoginInfo() {
+        LoginPrint.FindId();
+        String userName = sc.nextLine();
+
+        LoginPrint.inputRRN();
+        String RRN = sc.nextLine();
+
+        return new FindLoginIdRequestDto(userName, RRN);
     }
 }

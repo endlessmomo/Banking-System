@@ -11,6 +11,8 @@ public enum LoginCommand {
     SIGNUP("1"),
     LOGIN("2"),
     LOGOUT("3"),
+    FINDID("4"),
+    FINDPW("5"),
     PREVIOUS("P");
 
     private final String command;

@@ -1,5 +1,6 @@
 package bank.dao;
 
+import bank.dao.dto.FindLoginIdResponseDto;
 import bank.dao.dto.MemberDto;
 import bank.dao.dto.SignUpFormDto;
 import bank.util.Crypt;
@@ -76,8 +77,7 @@ public class MemberDaoImpl implements MemberDao {
             conn = DBUtil.getConnection();
             conn.setAutoCommit(false);
 
-            String sql = "SELECT * FROM member WHERE login" +
-                    "_id = ?";
+            String sql = "SELECT * FROM member WHERE login_id = ?";
 
             ps = conn.prepareStatement(sql);
             ps.setString(1, id);
@@ -113,6 +113,47 @@ public class MemberDaoImpl implements MemberDao {
             }
         }
         return dto;
+    }
+
+    @Override
+    public FindLoginIdResponseDto findMemberByRRN(String RRN) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        FindLoginIdResponseDto responseDto = null;
+
+        try {
+            conn = DBUtil.getConnection();
+            conn.setAutoCommit(false);
+
+            String sql = "SELECT login_id, user_name FROM member WHERE RRN = ?";
+
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, RRN);
+
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                responseDto = FindLoginIdResponseDto.builder()
+                        .loginId(rs.getString("login_id"))
+                        .userName(rs.getString("user_name"))
+                        .build();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null)
+                    rs.close();
+                if (ps != null)
+                    ps.close();
+                if (conn != null)
+                    conn.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return responseDto;
     }
 }
 

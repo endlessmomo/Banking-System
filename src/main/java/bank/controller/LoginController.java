@@ -1,13 +1,14 @@
 package bank.controller;
 
 import bank.controller.command.LoginCommand;
+import bank.dao.dto.FindLoginIdRequestDto;
+import bank.dao.dto.FindLoginIdResponseDto;
 import bank.dao.dto.LoginDto;
 import bank.dao.dto.SignUpFormDto;
 import bank.service.LoginService;
 import bank.view.InputView;
 import bank.view.OutputView;
 
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,6 +26,8 @@ public class LoginController implements Controller {
         service.put(SIGNUP, this::signUp);
         service.put(LOGIN, this::logIn);
         service.put(LOGOUT, this::logOut);
+        service.put(FINDID, this::findID);
+        service.put(FINDPW, this::findPW);
     }
 
     @Override
@@ -39,9 +42,9 @@ public class LoginController implements Controller {
     public void signUp() {
         SignUpFormDto dto = execute(inputView::readSingUpFormInfo);
 
-        try{
+        try {
             loginService.signUp(dto);
-        } catch (Exception e){
+        } catch (Exception e) {
             outputView.printException(e.getMessage());
         }
     }
@@ -49,20 +52,35 @@ public class LoginController implements Controller {
     public void logIn() {
         LoginDto dto = execute(inputView::readLogInInfo);
 
-        try{
+        try {
             loginService.logIn(dto);
             outputView.successLogIn();
-        } catch (Exception e){
+        } catch (Exception e) {
             outputView.printException(e.getMessage());
         }
     }
 
     public void logOut() {
-        try{
+        try {
             loginService.logOut();
             outputView.successLogout();
         } catch (Exception e) {
             outputView.printException(e.getMessage());
         }
+    }
+
+    public void findID() {
+        FindLoginIdRequestDto requestDto = execute(inputView::readFindLoginInfo);
+
+        try {
+            FindLoginIdResponseDto responseDto = loginService.findMemberLoginId(requestDto);
+            outputView.viewFindId(responseDto);
+        } catch (Exception e) {
+            outputView.printException(e.getMessage());
+        }
+    }
+
+    public void findPW() {
+
     }
 }
