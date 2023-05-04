@@ -10,7 +10,10 @@ public class OutputView {
         System.out.println(EXCEPTION_MESSAGE + message);
     }
 
-    public void successLogin(){
+    public void successLogIn(){
         LoginPrint.successLogin();
+    }
+    public void successLogout(){
+        LoginPrint.successLogout();
     }
 }

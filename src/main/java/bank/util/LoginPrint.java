@@ -38,4 +38,7 @@ public class LoginPrint {
     public static void successLogin(){
         System.out.println(YELLOW + "\n로그인에 성공하셨습니다.");
     }
+    public static void successLogout(){
+        System.out.println(YELLOW + "\n로그아웃에 성공하셨습니다.");
+    }
 }

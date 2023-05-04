@@ -7,6 +7,7 @@ import bank.service.LoginService;
 import bank.view.InputView;
 import bank.view.OutputView;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -50,13 +51,18 @@ public class LoginController implements Controller {
 
         try{
             loginService.logIn(dto);
-            outputView.successLogin();
+            outputView.successLogIn();
         } catch (Exception e){
             outputView.printException(e.getMessage());
         }
     }
 
     public void logOut() {
-
+        try{
+            loginService.logOut();
+            outputView.successLogout();
+        } catch (Exception e) {
+            outputView.printException(e.getMessage());
+        }
     }
 }
