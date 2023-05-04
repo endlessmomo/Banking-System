@@ -56,6 +56,7 @@ public class LoginInputView {
     public FindLoginIdRequestDto readFindIdInfo() {
         LoginPrint.findID();
         String userName = sc.nextLine();
+        inputValidator.validateName(userName);
 
         LoginPrint.inputRRN();
         String RRN = sc.nextLine();
@@ -74,6 +75,7 @@ public class LoginInputView {
 
         LoginPrint.inputID();
         String loginID = sc.nextLine();
+        inputValidator.validateName(userName);
 
         return new FindLoginPasswordRequestDto(userName, RRN, loginID);
     }

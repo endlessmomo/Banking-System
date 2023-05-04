@@ -30,7 +30,6 @@ public class MemberDaoImpl implements MemberDao {
 
             ps.setString(1, requestDto.getLoginID());
             ps.setString(2, requestDto.getPassword());
-            System.out.println(requestDto.getPassword());
             ps.setString(3, requestDto.getUserName());
             ps.setString(4, requestDto.getRRN());
             ps.setString(5, requestDto.getPhoneNumber());
@@ -176,7 +175,6 @@ public class MemberDaoImpl implements MemberDao {
             ps.setString(4, requestDto.getRRN());
 
             ps.executeUpdate();
-            System.out.println(requestDto.getPassword());
             conn.commit();
         } catch (SQLException e) {
             e.printStackTrace();
