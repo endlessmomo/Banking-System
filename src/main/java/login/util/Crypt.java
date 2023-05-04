@@ -7,7 +7,7 @@ public class Crypt {
         return BCrypt.hashpw(plainPW, BCrypt.gensalt());
     }
 
-    public static Boolean decryptPassword(String pw, String encrypt) {
-        return BCrypt.checkpw(pw, encrypt);
+    public static Boolean decryptPassword(String plainPW, String encryptPW) {
+        return BCrypt.checkpw(plainPW, encryptPW);
     }
 }

@@ -42,8 +42,17 @@ public class LoginPrint {
         System.out.print(PURPLE + "이름을 입력해 주세요 : ");
     }
 
+    public static void findPassword() {
+        System.out.println(GREEN + "\n비밀번호 찾기 ");
+        System.out.print(PURPLE + "이름을 입력해 주세요 : ");
+    }
+
     public static void inputRRN() {
         System.out.print(PURPLE + "주민번호를 입력해 주세요 (\"-\"로 구분해주세요) : ");
+    }
+
+    public static void inputID() {
+        System.out.print(PURPLE + "아이디를 입력해 주세요 : ");
     }
 
     // Output

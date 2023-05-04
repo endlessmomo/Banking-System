@@ -1,11 +1,12 @@
 package login.view;
 
-import global.controller.command.ControllerMapperCommand;
 import global.util.ControllerMapperPrint;
 import login.controller.command.LoginCommand;
 import login.dto.request.FindLoginIdRequestDto;
+import login.dto.request.FindLoginPasswordRequestDto;
 import login.dto.request.LoginRequestDto;
 import login.dto.request.SignUpRequestDto;
+import global.controller.command.ControllerMapperCommand;
 import login.util.LoginPrint;
 
 import java.util.Scanner;
@@ -52,7 +53,7 @@ public class LoginInputView {
         return new LoginRequestDto(userId, userPw);
     }
 
-    public FindLoginIdRequestDto readFindLoginInfo() {
+    public FindLoginIdRequestDto readFindIdInfo() {
         LoginPrint.findID();
         String userName = sc.nextLine();
 
@@ -61,5 +62,19 @@ public class LoginInputView {
         inputValidator.validateRRN(RRN);
 
         return new FindLoginIdRequestDto(userName, RRN);
+    }
+
+    public FindLoginPasswordRequestDto readFindPasswordInfo() {
+        LoginPrint.findPassword();
+        String userName = sc.nextLine();
+
+        LoginPrint.inputRRN();
+        String RRN = sc.nextLine();
+        inputValidator.validateRRN(RRN);
+
+        LoginPrint.inputID();
+        String loginID = sc.nextLine();
+
+        return new FindLoginPasswordRequestDto(userName, RRN, loginID);
     }
 }

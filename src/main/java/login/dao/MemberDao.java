@@ -1,14 +1,27 @@
 package login.dao;
 
 import login.dto.MemberDto;
+import login.dto.request.FindLoginIdRequestDto;
+import login.dto.request.FindLoginPasswordRequestDto;
 import login.dto.request.SignUpRequestDto;
 import login.dto.response.FindLoginIdResponseDto;
+import login.dto.response.FindLoginPasswordResponseDto;
 
 public interface MemberDao {
-    public void insertMember(SignUpRequestDto signUpFormDto);
+    // insert
+    public void save(SignUpRequestDto requestDto);
 
-    public MemberDto findMemberByID(String id);
 
-    public FindLoginIdResponseDto findMemberByRRN(String RRN);
+    // update
+    public void updatePasswordByLoginIDAndRRN(FindLoginPasswordRequestDto requestDto);
 
+
+    // select
+    public MemberDto findById(String loginID);
+
+    public FindLoginIdResponseDto findByRRN(FindLoginIdRequestDto requestDto);
+
+    public FindLoginPasswordResponseDto findByLoginIdAndRRN(FindLoginPasswordRequestDto requestDto);
+
+    // delete
 }

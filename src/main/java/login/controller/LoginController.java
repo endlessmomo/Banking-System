@@ -4,13 +4,16 @@ import global.controller.Controller;
 import global.util.Retry;
 import login.controller.command.LoginCommand;
 import login.dto.request.FindLoginIdRequestDto;
+import login.dto.request.FindLoginPasswordRequestDto;
 import login.dto.request.LoginRequestDto;
 import login.dto.request.SignUpRequestDto;
 import login.dto.response.FindLoginIdResponseDto;
+import login.dto.response.FindLoginPasswordResponseDto;
 import login.service.LoginService;
 import login.view.LoginInputView;
 import login.view.LoginOutputView;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -72,10 +75,10 @@ public class LoginController implements Controller {
     }
 
     public void findID() {
-        FindLoginIdRequestDto requestDto = Retry.execute(inputView::readFindLoginInfo);
+        FindLoginIdRequestDto requestDto = Retry.execute(inputView::readFindIdInfo);
 
         try {
-            FindLoginIdResponseDto responseDto = loginService.findMemberLoginId(requestDto);
+            FindLoginIdResponseDto responseDto = loginService.findLoginId(requestDto);
             outputView.viewFindID(responseDto);
         } catch (Exception e) {
             outputView.printException(e.getMessage());
@@ -83,6 +86,13 @@ public class LoginController implements Controller {
     }
 
     public void findPW() {
+        FindLoginPasswordRequestDto requestDto = Retry.execute(inputView::readFindPasswordInfo);
 
+        try {
+            FindLoginPasswordResponseDto responseDto = loginService.findLoginPassword(requestDto);
+            outputView.viewFindPW(responseDto);
+        } catch (SQLException e) {
+            outputView.printException(e.getMessage());
+        }
     }
 }

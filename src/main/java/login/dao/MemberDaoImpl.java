@@ -2,16 +2,19 @@ package login.dao;
 
 import global.util.DBUtil;
 import login.dto.MemberDto;
+import login.dto.request.FindLoginIdRequestDto;
+import login.dto.request.FindLoginPasswordRequestDto;
+import login.dto.request.LoginRequestDto;
 import login.dto.request.SignUpRequestDto;
 import login.dto.response.FindLoginIdResponseDto;
-import login.util.Crypt;
+import login.dto.response.FindLoginPasswordResponseDto;
 
 import java.sql.*;
 import java.time.LocalDateTime;
 
 public class MemberDaoImpl implements MemberDao {
     @Override
-    public void insertMember(SignUpRequestDto dto) {
+    public void save(SignUpRequestDto requestDto) {
         Connection conn = null;
         PreparedStatement ps = null;
 
@@ -26,12 +29,13 @@ public class MemberDaoImpl implements MemberDao {
 
             ps = conn.prepareStatement(sql);
 
-            ps.setString(1, dto.getLoginID());
-            ps.setString(2, Crypt.encryptPassword(dto.getPassword()));
-            ps.setString(3, dto.getUserName());
-            ps.setString(4, dto.getRRN());
-            ps.setString(5, dto.getPhoneNumber());
-            ps.setString(6, dto.getAddress());
+            ps.setString(1, requestDto.getLoginID());
+            ps.setString(2, requestDto.getPassword());
+            System.out.println(requestDto.getPassword());
+            ps.setString(3, requestDto.getUserName());
+            ps.setString(4, requestDto.getRRN());
+            ps.setString(5, requestDto.getPhoneNumber());
+            ps.setString(6, requestDto.getAddress());
             ps.setTimestamp(7, date);
             ps.setTimestamp(8, date);
             ps.setBoolean(9, false);
@@ -67,7 +71,7 @@ public class MemberDaoImpl implements MemberDao {
     }
 
     @Override
-    public MemberDto findMemberByID(String id) {
+    public MemberDto findById(String loginID) {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -80,7 +84,7 @@ public class MemberDaoImpl implements MemberDao {
             String sql = "SELECT * FROM member WHERE login_id = ?";
 
             ps = conn.prepareStatement(sql);
-            ps.setString(1, id);
+            ps.setString(1, loginID);
 
             rs = ps.executeQuery();
 
@@ -115,8 +119,7 @@ public class MemberDaoImpl implements MemberDao {
         return dto;
     }
 
-    @Override
-    public FindLoginIdResponseDto findMemberByRRN(String RRN) {
+    public FindLoginIdResponseDto findByRRN(FindLoginIdRequestDto requestDto) {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -129,7 +132,7 @@ public class MemberDaoImpl implements MemberDao {
             String sql = "SELECT login_id, user_name FROM member WHERE RRN = ?";
 
             ps = conn.prepareStatement(sql);
-            ps.setString(1, RRN);
+            ps.setString(1, requestDto.getRRN());
 
             rs = ps.executeQuery();
 
@@ -137,6 +140,83 @@ public class MemberDaoImpl implements MemberDao {
                 responseDto = FindLoginIdResponseDto.builder()
                         .loginID(rs.getString("login_id"))
                         .userName(rs.getString("user_name"))
+                        .build();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null)
+                    rs.close();
+                if (ps != null)
+                    ps.close();
+                if (conn != null)
+                    conn.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return responseDto;
+    }
+
+    @Override
+    public void updatePasswordByLoginIDAndRRN(FindLoginPasswordRequestDto requestDto) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+
+        try {
+            conn = DBUtil.getConnection();
+            conn.setAutoCommit(false);
+
+            String sql = "UPDATE member SET password = ?, updated_at = ?WHERE login_id = ? AND RRN = ?";
+
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, requestDto.getPassword());
+            ps.setTimestamp(2, Timestamp.valueOf(LocalDateTime.now()));
+            ps.setString(3, requestDto.getLoginID());
+            ps.setString(4, requestDto.getRRN());
+
+            ps.executeUpdate();
+            System.out.println(requestDto.getPassword());
+            conn.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (ps != null)
+                    ps.close();
+                if (conn != null)
+                    conn.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    public FindLoginPasswordResponseDto findByLoginIdAndRRN(FindLoginPasswordRequestDto requestDto) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        FindLoginPasswordResponseDto responseDto = null;
+
+        try {
+            conn = DBUtil.getConnection();
+            conn.setAutoCommit(false);
+
+            String sql = "SELECT login_id, user_name, password FROM member WHERE login_id = ? AND RRN = ?";
+
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, requestDto.getLoginID());
+            ps.setString(2, requestDto.getRRN());
+
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                responseDto = FindLoginPasswordResponseDto.builder()
+                        .loginID(rs.getString("login_id"))
+                        .userName(rs.getString("user_name"))
+                        .password(rs.getString("password"))
                         .build();
             }
         } catch (SQLException e) {
