@@ -13,7 +13,6 @@ import login.dto.response.FindLoginIdResponseDto;
 import login.dto.response.FindLoginPasswordResponseDto;
 import login.dto.response.LoginStatusResponseDto;
 import login.util.Crypt;
-import login.util.RandomPassword;
 
 import java.sql.SQLException;
 
@@ -24,7 +23,6 @@ public class LoginService {
     public void signUp(SignUpRequestDto signUpFormDto) {
         String crypt = Crypt.encryptPassword(signUpFormDto.getPassword());
         signUpFormDto.setPassword(crypt);
-        System.out.println(signUpFormDto.getPassword());
         memberDao.save(signUpFormDto);
     }
 
@@ -91,11 +89,14 @@ public class LoginService {
 
         memberDao.updatePasswordByLoginIDAndRRN(requestDto);
         FindLoginPasswordResponseDto responseDto = memberDao.findByLoginIdAndRRN(requestDto);
-        System.out.println(responseDto.getPassword());
 
         try {
-            if (responseDto == null || !responseDto.getUserName().equals(requestDto.getUserName())) {
-                throw new IllegalArgumentException("존재하지 않는 회원입니다.");
+            if (responseDto == null) {
+                throw new IllegalArgumentException("잘못된 정보를 입력하셨습니다.");
+            }
+
+            if (!responseDto.getUserName().equals(requestDto.getUserName())) {
+                throw new IllegalArgumentException("잘못된 정보를 입력하셨습니다.");
             }
         } catch (Exception e) {
             throw e;

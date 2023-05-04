@@ -4,7 +4,6 @@ import global.util.DBUtil;
 import login.dto.MemberDto;
 import login.dto.request.FindLoginIdRequestDto;
 import login.dto.request.FindLoginPasswordRequestDto;
-import login.dto.request.LoginRequestDto;
 import login.dto.request.SignUpRequestDto;
 import login.dto.response.FindLoginIdResponseDto;
 import login.dto.response.FindLoginPasswordResponseDto;

@@ -1,14 +1,12 @@
 package login.dto.request;
 
-import login.util.Crypt;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 @Getter
 @Setter
-@ToString
+@AllArgsConstructor
 public class SignUpRequestDto {
     // 이름
     private String userName;
@@ -22,13 +20,4 @@ public class SignUpRequestDto {
     private String address;
     // 핸드폰 번호
     private String phoneNumber;
-
-    public SignUpRequestDto(String userName, String loginID, String password, String RRN, String address, String phoneNumber) {
-        this.userName = userName;
-        this.loginID = loginID;
-        this.password = Crypt.encryptPassword(password);
-        this.RRN = RRN;
-        this.address = address;
-        this.phoneNumber = phoneNumber;
-    }
 }

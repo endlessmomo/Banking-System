@@ -1,8 +1,6 @@
 package login.dto.request;
 
-import login.util.Crypt;
 import login.util.RandomPassword;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
