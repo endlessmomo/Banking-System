@@ -1,0 +1,5 @@
+executeUpdate() 메소드는 INSER, UPDATE, DELETE 구문을 실행할 때 사용
+
+
+excuteQuery() : select문에 사용한다.
+ - ResultSet을 이용해야 한다.

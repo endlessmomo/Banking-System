@@ -1,10 +1,10 @@
-import bank.controller.MapperController;
-import bank.controller.Controller;
-import bank.controller.LoginController;
-import bank.controller.command.ControllerMapper;
-import bank.service.LoginService;
+import global.controller.Controller;
+import global.controller.MapperController;
+import global.controller.command.ControllerMapper;
+import login.controller.LoginController;
+import login.service.LoginService;
 
-import static bank.controller.command.ControllerMapperCommand.LOGIN;
+import static global.controller.command.ControllerMapperCommand.LOGIN;
 
 public class Application {
     public static void main(String[] args) {
@@ -22,7 +22,7 @@ public class Application {
     }
 
     // 싱글톤 패턴을 유지하기 위한 로직
-    public static LoginService loginService(){
+    public static LoginService loginService() {
         return new LoginService();
     }
 }

@@ -1,4 +1,4 @@
-package bank.controller.command;
+package global.controller.command;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,7 +23,7 @@ public enum ControllerMapperCommand {
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 명령을 요청하셨습니다."));
     }
 
-    public boolean isNotQuit(){
+    public boolean isNotQuit() {
         return this != QUIT;
     }
 }

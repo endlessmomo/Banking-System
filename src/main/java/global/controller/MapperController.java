@@ -1,13 +1,13 @@
-package bank.controller;
+package global.controller;
 
-import bank.controller.command.ControllerMapper;
-import bank.controller.command.ControllerMapperCommand;
-import bank.view.InputView;
+import global.controller.command.ControllerMapper;
+import global.controller.command.ControllerMapperCommand;
+import login.view.LoginInputView;
 
-import static bank.util.Retry.execute;
+import static global.util.Retry.execute;
 
 public class MapperController implements Controller {
-    private final InputView inputView = new InputView();
+    private final LoginInputView inputView = new LoginInputView();
 
     private final ControllerMapper controllerMapper;
 

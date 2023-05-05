@@ -1,6 +1,6 @@
-package bank.controller.command;
+package global.controller.command;
 
-import bank.controller.Controller;
+import global.controller.Controller;
 
 import java.util.EnumMap;
 import java.util.Map;

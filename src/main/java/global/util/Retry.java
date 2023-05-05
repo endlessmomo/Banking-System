@@ -1,4 +1,4 @@
-package bank.util;
+package global.util;
 
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -11,6 +11,7 @@ public class Retry {
         try {
             return supplier.get();
         } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
             return execute(supplier);
         }
     }

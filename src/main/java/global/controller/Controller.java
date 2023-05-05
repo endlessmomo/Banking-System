@@ -1,4 +1,4 @@
-package bank.controller;
+package global.controller;
 
 @FunctionalInterface
 public interface Controller {
