@@ -30,7 +30,7 @@ public class LoginOutputView {
     }
 
     public void viewFindPW(FindLoginPasswordResponseDto responseDto) {
-        System.out.println(YELLOW + "안녕하세요 " + responseDto.getUserName() + "님");
+        System.out.println(YELLOW + "\n안녕하세요 " + responseDto.getUserName() + "님");
         System.out.println("회원님의 계정: " + responseDto.getLoginID() + " 임시비밀번호는 " + responseDto.getPassword() + " 입니다.");
     }
 }

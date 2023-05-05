@@ -68,6 +68,7 @@ public class LoginInputView {
     public FindLoginPasswordRequestDto readFindPasswordInfo() {
         LoginPrint.findPassword();
         String userName = sc.nextLine();
+        inputValidator.validateName(userName);
 
         LoginPrint.inputRRN();
         String RRN = sc.nextLine();

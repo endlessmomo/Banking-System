@@ -13,7 +13,6 @@ import login.service.LoginService;
 import login.view.LoginInputView;
 import login.view.LoginOutputView;
 
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -91,7 +90,7 @@ public class LoginController implements Controller {
         try {
             FindLoginPasswordResponseDto responseDto = loginService.findLoginPassword(requestDto);
             outputView.viewFindPW(responseDto);
-        } catch (SQLException e) {
+        } catch (Exception e) {
             outputView.printException(e.getMessage());
         }
     }

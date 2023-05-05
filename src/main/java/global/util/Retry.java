@@ -11,6 +11,7 @@ public class Retry {
         try {
             return supplier.get();
         } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
             return execute(supplier);
         }
     }
